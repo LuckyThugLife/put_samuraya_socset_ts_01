@@ -5,18 +5,21 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Header from './components/Header/Header';
-import {PostsType, StateType} from "./redux/state";
+import {PostsType, ProfilePageType, StateType} from "./redux/state";
 
 export type AddPostType = {
     addPost: (postText: string) => void
     message: string
     posts: Array<PostsType>
+    newPostText: string
 }
 
 
 export type AppPropsType ={
     state: StateType
     addPost: (postText: string) => void
+    updateNewPostText: (newText: string) => void
+
 
 }
 
@@ -34,8 +37,10 @@ const App:React.FC<AppPropsType> = (props) => {
                 <div className={"app-wrapper-content"}>
                     <Routes>
                         <Route path={"/profile"} element={
-                            <Profile posts={props.state.profilePage.posts}
-                                     addPost={props.addPost}/>}/>
+                            <Profile profilePage={props.state.profilePage}
+                                     addPost={props.addPost}
+                                     updateNewPostText={props.updateNewPostText}/>}/>
+
                         <Route path={"/dialogs"} element={
                             <Dialogs dialogs={props.state.dialogsPage.dialogs}
                                      messages={props.state.dialogsPage.messages}/>}/>
